@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   environment {
-    IMAGE_NAME = "customLinux-${BUILD_NUMBER}"
+    IMAGE_NAME = "customLinux-6"
     version = "0.0.1"
     }
   
