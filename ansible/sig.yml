@@ -1,6 +1,7 @@
 ---
-- name: Install Git and Check CIS role
+- name: Install SIG role
   hosts: local
+  become: yes
 
   roles:
     - sig
