@@ -41,7 +41,7 @@
         "ansible/roles/git",
         "ansible/roles/centoscis"
       ],
-      "group_vars": "ansible/group_vars"
+      "group_vars": "./ansible/group_vars"
     },
     {
       "type": "shell",
