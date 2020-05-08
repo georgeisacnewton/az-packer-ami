@@ -30,7 +30,7 @@
     publishing_profile:
        end_of_life_date: "2020-10-01t00:00:00+00:00"
        exclude_from_latest: yes
-       replica_count: 3
+       replica_count: 2
        storage_account_type: Standard_LRS
        target_regions:
          - name: West US
@@ -41,7 +41,7 @@
        managed_image:
          name: "{{ image_name }}"
          resource_group: "{{ resource_group }}"
-    register: output
+  register: output
 
 - debug:
     var: output
