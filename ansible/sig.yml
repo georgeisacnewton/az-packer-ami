@@ -1,6 +1,6 @@
 ---
 - name: Install SIG role
-  hosts: local
+  hosts: localhost
   connection: local
 
   roles:
