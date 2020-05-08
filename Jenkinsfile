@@ -39,7 +39,7 @@ pipeline {
                 export AZURE_SECRET=$AZURE_CLIENT_SECRET
                 export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
                 export AZURE_TENANT=$AZURE_TENANT_ID
-                export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"customLinux-6", "shared_image_version":"0.0.1"}'
+                export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"customLinux-6", "shared_image_version":"0.0.2"}'
 
             '''
         }
