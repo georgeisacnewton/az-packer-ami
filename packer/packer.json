@@ -32,26 +32,26 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "scripts/ansible.sh"
+      "script": "packer/scripts/ansible.sh"
     },
     {
       "type": "ansible-local",
-      "playbook_file": "../ansible/install.yml",
+      "playbook_file": "ansible/install.yml",
       "role_paths": [
-        "../ansible/roles/git",
-        "../ansible/roles/centoscis"
+        "ansible/roles/git",
+        "ansible/roles/centoscis"
       ],
-      "group_vars": "../ansible/group_vars"
+      "group_vars": "ansible/group_vars"
     },
     {
       "type": "shell",
-      "script": "scripts/cleanup.sh"
+      "script": "packer/scripts/cleanup.sh"
     }
   ],
   "post-processors": [
     [
       {
-        "output": "manifest.json",
+        "output": "packer/manifest.json",
         "strip_path": true,
         "type": "manifest"
       }
