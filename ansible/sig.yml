@@ -1,6 +1,7 @@
 ---
 - name: Install Git and Check CIS role
   hosts: localhost
+  ansible_python_interpreter: "/usr/bin/python2"
 
   roles:
     - sig
