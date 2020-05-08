@@ -13,7 +13,7 @@
     name: "{{ shared_image_name }}"
     location: "{{ location }}"
     os_type: linux
-    os_state: specialized
+    os_state: Generalized
     identifier:
       publisher: cloudsec
       offer: centos
