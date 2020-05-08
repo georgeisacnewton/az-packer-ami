@@ -1,7 +1,7 @@
 ---
 - name: Install SIG role
   hosts: local
-  become: yes
+  connection: local
 
   roles:
     - sig
