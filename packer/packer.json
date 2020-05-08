@@ -3,7 +3,7 @@
     "client_id": "",
     "client_secret": "",
     "tenant_id": "",
-    "ami_name": "customLinux-{{isotime \"2006-01-02-24\"}}"
+    "ami_name": ""
   },
   "builders": [
     {
