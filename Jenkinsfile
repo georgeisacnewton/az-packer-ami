@@ -39,7 +39,8 @@ pipeline {
                 export AZURE_SECRET=$AZURE_CLIENT_SECRET
                 export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
                 export AZURE_TENANT=$AZURE_TENANT_ID
-                ansible-playbook ansible/sig.yml -e '{"shared_image_name":"${IMAGE_NAME}", "shared_image_version":"${version}", "{ansible_python_interpreter":"/usr/bin/python2.7"}}'
+                export ansible_python_interpreter=/usr/bin/python2
+                ansible-playbook ansible/sig.yml -e '{"shared_image_name":"${IMAGE_NAME}", "shared_image_version":"${version}"}'
 
             '''
         }
