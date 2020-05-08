@@ -1,0 +1,6 @@
+resource_group: testrg
+location: eastus
+image_name: testimagea
+shared_gallery_name: SIG-cloudsec
+shared_image_name: myImage
+shared_image_version: test
