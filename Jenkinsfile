@@ -7,15 +7,15 @@ pipeline {
     }
   
   stages {
-    stage('Create Packer AMI') {
-        steps {
-    withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')]) {
-            sh '''
-              /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} packer/packer.json
-            '''
-        }
-      }
-    }
+    // stage('Create Packer AMI') {
+    //     steps {
+    // withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')]) {
+    //         sh '''
+    //           /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} packer/packer.json
+    //         '''
+    //     }
+    //   }
+    // }
     // stage('Azure Deployment') {
     //   steps {
     //       withCredentials([
@@ -39,7 +39,7 @@ pipeline {
                 export AZURE_SECRET=$AZURE_CLIENT_SECRET
                 export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
                 export AZURE_TENANT=$AZURE_TENANT_ID
-                ansible-playbook ansible/sig.yml -e '{"shared_image_name":"${IMAGE_NAME}", "shared_image_version":"${version}"}'
+                ansible-playbook ansible/sig.yml -e '{"shared_image_name":"${IMAGE_NAME}", "shared_image_version":"${version}", "{ansible_python_interpreter":"/usr/bin/python2.7"}}'
 
             '''
         }
