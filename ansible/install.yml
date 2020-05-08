@@ -1,0 +1,7 @@
+---
+- name: Install Git and Check CIS role
+  hosts: localhost
+
+  roles:
+    - git
+    - centoscis
