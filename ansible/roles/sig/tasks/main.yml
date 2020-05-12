@@ -16,8 +16,8 @@
     os_state: generalized
     identifier:
       publisher: cloudsec
-      offer: centos
-      sku: centos-7
+      offer: centos-1
+      sku: centos-1-7
     description: Image Description
     
 - name: Create or update a simple gallery Image Version.

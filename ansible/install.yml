@@ -1,7 +1,9 @@
 ---
 - name: Install Git and Check CIS role
   hosts: localhost
+  gather_facts: true
 
   roles:
     - git
     - centoscis
+    - cloudagent
