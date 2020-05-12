@@ -5,10 +5,7 @@ pipeline {
     IMAGE_NAME = "customLinux-${BUILD_NUMBER}"
     VERSION = "0.0.4"
     }
-
-        "activation_id": "",
-    "customer_id": ""
-  
+    
   stages {
     stage('Create Packer AMI') {
         steps {
