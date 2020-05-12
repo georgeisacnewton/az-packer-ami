@@ -5,14 +5,17 @@ pipeline {
     IMAGE_NAME = "customLinux-${BUILD_NUMBER}"
     VERSION = "0.0.4"
     }
+
+        "activation_id": "",
+    "customer_id": ""
   
   stages {
     stage('Create Packer AMI') {
         steps {
     withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59'),
-    usernamePassword(credentialsId: 'qualysid', usernameVariable: 'AWS_KEY', passwordVariable: 'AWS_SECRET')]) {
+    usernamePassword(credentialsId: 'qualysid', usernameVariable: 'AT_ID', passwordVariable: 'CU_ID')]) {
             sh '''
-              /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} packer/packer.json
+              /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} -var activation_id=$AT_ID -var customer_id=$CU_ID packer/packer.json
             '''
         }
       }
