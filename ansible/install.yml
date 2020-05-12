@@ -6,4 +6,7 @@
   roles:
     - git
     - centoscis
-    - cloudagent
+    - role: cloudagent
+      vars:
+         activation_id: "{{ activation_id }}"
+         customer_id: "{{ customer_id }}"

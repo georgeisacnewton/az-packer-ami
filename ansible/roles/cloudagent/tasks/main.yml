@@ -42,7 +42,7 @@
   # when: ansible_distribution == 'RedHat' or ansible_distribution == 'CentOS'
 
 - name: Execute the Activation Script
-  shell: /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ activation_id}}" CustomerId="{{ customer_id }}"
+  shell: /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ activation_id }}" CustomerId="{{ customer_id }}"
   become: yes
   become_method: sudo
   
