@@ -33,14 +33,12 @@ pipeline {
   
          input {
                 message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
                 parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+                    choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
                 }
             }
             steps {
-                echo "Hello, ${PERSON}, nice to meet you."
+                echo "Hello, ${params.CHOICE}, nice to meet you."
             }
     
     }
