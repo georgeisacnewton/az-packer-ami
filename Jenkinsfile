@@ -55,7 +55,7 @@ pipeline {
         }
         steps {
 
-            echo "Hello ${params.ACTION}"
+            sh "echo "Hello ${params.ACTION}""
 
             //  withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             // {
@@ -72,7 +72,7 @@ pipeline {
              expression { "${params.ACTION} == 'Yes'" }
         }
       steps{  
-        echo "Hello ${params.ACTION}"
+        sh "echo "Hello ${params.ACTION}""
         // withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
         //        {
         //     sh '''
