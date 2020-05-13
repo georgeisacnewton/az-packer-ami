@@ -2,33 +2,55 @@ pipeline {
   agent any
   
   environment {
-    IMAGE_NAME = "customLinux-${BUILD_NUMBER}"
+    IMAGE_NAME = "customLinux-41"
     VERSION = "0.0.4"
     }
     
-  stages {
-    stage('Create Packer AMI') {
-        steps {
-    withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59'),
-    usernamePassword(credentialsId: 'qualysid', usernameVariable: 'AT_ID', passwordVariable: 'CU_ID')]) {
-            sh '''
-              /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} -var activation_id=$AT_ID -var customer_id=$CU_ID packer/packer.json
-            '''
-        }
-      }
-    }
+  // stages {
+  //   stage('Create Packer AMI') {
+  //       steps {
+  //   withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59'),
+  //   usernamePassword(credentialsId: 'qualysid', usernameVariable: 'AT_ID', passwordVariable: 'CU_ID')]) {
+  //           sh '''
+  //             /usr/local/bin/packer build -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID -var ami_name=${IMAGE_NAME} -var activation_id=$AT_ID -var customer_id=$CU_ID packer/packer.json
+  //           '''
+  //       }
+  //     }
+  //   }
     stage('Azure Deployment') {
       steps {
            withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
-               cd terraform
-               terraform init
-               terraform apply -auto-approve -var client_id=$AZURE_CLIENT_ID -var client_secret=$AZURE_CLIENT_SECRET  -var tenant_id=$AZURE_TENANT_ID  -var ami_name=${IMAGE_NAME} 
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+            az vm create --resource-group testrg  --name ${IMAGE_NAME} --image ${IMAGE_NAME} --admin-username azureuser --generate-ssh-keys
             '''
         }
       }
     }
+    timeout(time: 2, unit: “MINUTES”)
+    parameters {
+          choice(
+             choices: ['Yes' , 'No'],
+             description: 'Approval?',
+             name: 'ACTION')
+      }
+    stage('Destory') {
+      when {
+            expression { params.ACTION == 'Yes' }
+            }
+
+      steps {
+          withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+            {
+            sh '''
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+            az vm delete -g testrg -n ${IMAGE_NAME}--yes
+            '''
+            }
+          }
+        }
+  
     stage('Upload to SIG') {
       steps {
           withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
