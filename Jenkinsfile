@@ -31,27 +31,20 @@ pipeline {
 
     stage('Condition') {
       steps {
-
-       script {
-            // Define Variable
-             def USER_INPUT = input(
-                    message: 'Yes or No ?',
-                    parameters: [
-                            [$class: 'ChoiceParameterDefinition',
-                             choices: ['no','yes'].join('\n'),
-                             name: 'input',
-                             description: 'Menu - select box option']
-                    ])
-                env.IN = USER_INPUT.input
-
-      }
+         input {
+                message "Should we continue?"
+                submitter "Yes,No"
+                parameters {
+                    string(name: 'Action', defaultValue: 'No', description: '?')
+                }
+            }
       }
         }
 
       stage('Destroy') {
       steps {
       when {
-            expression { env.IN == 'No' }
+            expression { params.Action == 'No' }
             }
           withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
