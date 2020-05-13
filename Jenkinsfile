@@ -36,12 +36,10 @@ pipeline {
                 parameters {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
+           env.test=parameters.ACTION
             }
-        when {
-             expression { "${params.ACTION} == 'No'" }
-        }
       steps {
-         echo "Hello ${params.ACTION}"
+         echo "Hello ${params.test}"
             }
       }
     
