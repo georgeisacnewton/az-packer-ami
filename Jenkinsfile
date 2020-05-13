@@ -49,12 +49,12 @@ pipeline {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
             }
-
+         echo 
         when {
              expression { "${params.ACTION} == 'No'" }
         }
         steps {
-            
+            echo "Hello ${params.ACTION}"
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
@@ -66,14 +66,12 @@ pipeline {
       }
     
     stage('Upload to SIG') {
-      
        when {
              expression { "${params.ACTION} == 'Yes'" }
         }
-      
-      steps{
-
-          withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+      steps{  
+        echo "Hello ${params.ACTION}"
+        withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
                 export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
