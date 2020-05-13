@@ -59,7 +59,7 @@ pipeline {
             {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            az vm delete -g testrg -n ${IMAGE_NAME}--yes
+            az vm delete -g testrg -n ${IMAGE_NAME} --yes
             '''
             }
       }
@@ -69,8 +69,10 @@ pipeline {
   
     stage('Upload to SIG') {
       steps{
-      script {
-        if( params.name == "No") {
+       when {
+             expression { "${params.ACTION} == 'Yes'" }
+        }
+
           withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
@@ -87,8 +89,7 @@ pipeline {
       }
     }
 
-  }
-}
+
 
 
  
