@@ -45,9 +45,10 @@ pipeline {
         steps {
         script {
         // Show the select input modal
-            def INPUT_PARAMS = input message: 'Please Provide Parameters',
+            def INPUT_PARAMS = input(id:'userinput' , message: 'Please Provide Parameters',
                         parameters: [
-                        choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '')]
+                        choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '')])
+
          if( "${INPUT_PARAMS}" == "Yes")
               {
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
