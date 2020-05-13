@@ -28,14 +28,15 @@ pipeline {
         }
       }
     }
-    timeout(time: 2, unit: “MINUTES”)
+    stage('Destory') {
+
+      timeout(time: 2, unit: “MINUTES”)
     parameters {
           choice(
              choices: ['Yes' , 'No'],
              description: 'Approval?',
              name: 'ACTION')
       }
-    stage('Destory') {
       when {
             expression { params.ACTION == 'Yes' }
             }
