@@ -44,7 +44,7 @@ pipeline {
       stage('Condition') {
        
         when {
-             expression { params.name == 'No' }
+             expression { ${params.ACTION} == 'No' }
         }
         input {
                 message "Should we continue?"
@@ -70,7 +70,7 @@ pipeline {
     stage('Upload to SIG') {
       steps{
       script {
-        if( "${INPUT_PARAMS}" == "No") {
+        if( params.name == "No") {
           withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
