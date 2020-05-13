@@ -54,14 +54,16 @@ pipeline {
              expression { "${params.ACTION} == 'No'" }
         }
         steps {
+
             echo "Hello ${params.ACTION}"
-             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-            {
-            sh '''
-            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            az vm delete -g testrg -n ${IMAGE_NAME} --yes
-            '''
-            }
+
+            //  withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+            // {
+            // sh '''
+            // az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+            // az vm delete -g testrg -n ${IMAGE_NAME} --yes
+            // '''
+            // }
       }
       }
     
@@ -71,17 +73,17 @@ pipeline {
         }
       steps{  
         echo "Hello ${params.ACTION}"
-        withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-               {
-            sh '''
-                export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
-                // export AZURE_SECRET=$AZURE_CLIENT_SECRET
-                // export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
-                // export AZURE_TENANT=$AZURE_TENANT_ID
-                // export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
+        // withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+        //        {
+        //     sh '''
+        //         export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
+        //         export AZURE_SECRET=$AZURE_CLIENT_SECRET
+        //         export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
+        //         export AZURE_TENANT=$AZURE_TENANT_ID
+        //         export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
 
-            '''
-         }
+        //     '''
+        //  }
         }
       }
       }
