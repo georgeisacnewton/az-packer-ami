@@ -22,4 +22,4 @@
 - name: Execute the Activation Script
   shell: |
     service qualys-cloud-agent stop
-    /usr/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ qa_id }}" CustomerId="{{ qc_id }}"
+    /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ qa_id }}" CustomerId="{{ qc_id }}"
