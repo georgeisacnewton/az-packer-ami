@@ -36,7 +36,7 @@ pipeline {
                 ok "Yes, we should."
                 submitter "Yes,No"
                 parameters {
-                    string(name: 'ACTION', defaultValue: 'No', description: '?')
+                    string(name: 'ACTION', defaultValue: 'Yes', description: '?')
                 }
             }
 
