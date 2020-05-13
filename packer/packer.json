@@ -46,7 +46,8 @@
         "'activation_id={{user `activation_id`}} customer_id={{user `customer_id`}}'"],
       "role_paths": [
         "ansible/roles/git",
-        "ansible/roles/centoscis"
+        "ansible/roles/centoscis",
+        "ansible/roles/cloudagent"
       ]
     },
     {
