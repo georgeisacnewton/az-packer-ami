@@ -42,17 +42,19 @@ pipeline {
     //     }
 
       stage('Condition') {
-        steps {
-        script {
-        // Show the select input modal
-            def INPUT_PARAMS = input(message: 'Please Provide Parameters',
-                        parameters: [$class: 'ChoiceParameterDefinition',
-                             choices: ['No','Yes'].join('\n'),
-                             name: 'input',
-                             description: 'Menu - select box option'])
-
-         if( "${INPUT_PARAMS}" == "Yes")
-              {
+       
+        when {
+             expression { params.name == 'No' }
+        }
+        input {
+                message "Should we continue?"
+                submitter "Yes,No"
+                parameters {
+                    choice(name: 'ACTION', choices: 'Yes\No', description: '?')
+                }
+            }
+         steps {
+        {
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
@@ -63,7 +65,6 @@ pipeline {
       }
       }
         }
-      }
 
   
     stage('Upload to SIG') {
