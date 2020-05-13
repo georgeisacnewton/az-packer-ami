@@ -41,18 +41,18 @@ pipeline {
     //   }
     //     }
 
-      stage('Condition') {
-       
-        when {
-             expression { "${params.ACTION} == 'No'" }
-        }
-        input {
+      stage('Condition') { 
+       input {
                 message "Should we continue?"
                 submitter "Yes,No"
                 parameters {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
             }
+
+        when {
+             expression { "${params.ACTION} == 'No'" }
+        }
         steps {
             
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
@@ -65,8 +65,6 @@ pipeline {
       }
       }
     
-
-  
     stage('Upload to SIG') {
       
        when {
@@ -79,10 +77,10 @@ pipeline {
                {
             sh '''
                 export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
-                export AZURE_SECRET=$AZURE_CLIENT_SECRET
-                export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
-                export AZURE_TENANT=$AZURE_TENANT_ID
-                export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
+                // export AZURE_SECRET=$AZURE_CLIENT_SECRET
+                // export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
+                // export AZURE_TENANT=$AZURE_TENANT_ID
+                // export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
 
             '''
          }
