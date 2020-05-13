@@ -53,8 +53,8 @@ pipeline {
                     choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '?')
                 }
             }
-         steps {
-        {
+        steps {
+            {
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
