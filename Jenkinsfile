@@ -38,7 +38,7 @@ pipeline {
                 }
             }
             steps {
-                echo "Hello, ${params.CHOICE}, nice to meet you."
+                echo "Hello, ${CHOICE}, nice to meet you."
             }
     
     }
