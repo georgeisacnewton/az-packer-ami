@@ -13,4 +13,4 @@
          qc_id: "{{ customer_id }}"
          c_id: "{{ client_id }}"
          c_secret: "{{ client_secret }}"
-         t_id: " {{ tenant_id }}"
+         t_id: "{{ tenant_id }}"
