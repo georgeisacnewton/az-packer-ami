@@ -28,7 +28,10 @@ pipeline {
         }
       }
     }
-    stage('Destory') {
+
+  stage('condition') {
+
+    steps{
 
       timeout(time: 2, unit: “MINUTES”)
     parameters {
@@ -37,6 +40,10 @@ pipeline {
              description: 'Approval?',
              name: 'ACTION')
       }
+    }
+
+    stage('Destory') {
+      
       when {
             expression { params.ACTION == 'Yes' }
             }
