@@ -46,13 +46,17 @@ pipeline {
               message "Should we continue?"
                 submitter "Yes,No"
                 parameters {
-                    string(name: 'Action', defaultValue: 'No', description: '?')
+                          choice(
+                            choices: ['Yes' , 'No'],
+                            description: '',
+                            name: 'ACTION')
                 }
             }
-      steps {
-      when {
-            expression { params.Action == 'No' }
+
+         when {
+            expression { params.ACTION == 'No' }
             }
+      steps {
           withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
