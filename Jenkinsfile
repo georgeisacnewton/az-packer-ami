@@ -49,12 +49,9 @@ pipeline {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
             }
-        environment {
-           ACTIVE = "${ACTION}"
-          }
 
         when {
-             expression { "${ACTION} == 'No'" }
+             "${ACTION}" 'No'
         }
         steps {
 
