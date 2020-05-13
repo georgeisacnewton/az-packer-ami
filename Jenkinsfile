@@ -48,9 +48,6 @@ pipeline {
             def INPUT_PARAMS = input message: 'Please Provide Parameters',
                         parameters: [
                         choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '')]
-            env.ACTION=INPUT_PARAMS.ACTION
-        
-         
          if( "${INPUT_PARAMS}" == "Yes")
               {
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
@@ -69,7 +66,7 @@ pipeline {
     stage('Upload to SIG') {
       steps{
       script {
-        if( "${env.ACTION}" == "No") {
+        if( "${INPUT_PARAMS}" == "No") {
           withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
