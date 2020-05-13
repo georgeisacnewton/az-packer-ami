@@ -45,9 +45,12 @@ pipeline {
         steps {
         script {
         // Show the select input modal
-            def INPUT_PARAMS = input(id:'userinput' , message: 'Please Provide Parameters',
-                        parameters: [
-                        choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '')])
+            def INPUT_PARAMS = input(message: 'Please Provide Parameters',
+                        parameters: [$class: 'ChoiceParameterDefinition',
+                             choices: ['No','Yes'].join('\n'),
+                             name: 'input',
+                             description: 'Menu - select box option']
+                    ])
 
          if( "${INPUT_PARAMS}" == "Yes")
               {
