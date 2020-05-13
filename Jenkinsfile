@@ -29,63 +29,58 @@ pipeline {
     //   }
     // }
 
-    // stage('Condition') {
-    //   steps {
-    //      input {
-    //             message "Should we continue?"
-    //             submitter "Yes,No"
-    //             parameters {
-    //                 string(name: 'Action', defaultValue: 'No', description: '?')
-    //             }
-    //         }
-    //   }
-    //     }
-
-      stage('Condition') { 
-       input {
-                message "Should we continue?"
-                submitter "Yes,No"
-                parameters {
-                    choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
-                }
+    stage('Condition') {
+      steps {
+         echo "Hello ${params.ACTION}"
             }
-         echo 
-        when {
-             expression { "${params.ACTION} == 'No'" }
-        }
-        steps {
-
-            sh "echo "Hello ${params.ACTION}""
-
-            //  withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-            // {
-            // sh '''
-            // az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            // az vm delete -g testrg -n ${IMAGE_NAME} --yes
-            // '''
-            // }
-      }
       }
     
-    stage('Upload to SIG') {
-       when {
-             expression { "${params.ACTION} == 'Yes'" }
-        }
-      steps{  
-        sh "echo "Hello ${params.ACTION}""
-        // withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-        //        {
-        //     sh '''
-        //         export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
-        //         export AZURE_SECRET=$AZURE_CLIENT_SECRET
-        //         export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
-        //         export AZURE_TENANT=$AZURE_TENANT_ID
-        //         export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
 
-        //     '''
-        //  }
-        }
-      }
+      // stage('Condition') { 
+      //  input {
+      //           message "Should we continue?"
+      //           submitter "Yes,No"
+      //           parameters {
+      //               choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
+      //           }
+      //       }
+      //    echo 
+      //   when {
+      //        expression { "${params.ACTION} == 'No'" }
+      //   }
+      //   steps {
+
+      //      echo "Hello ${params.ACTION}"
+
+      //        withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+      //       {
+      //       sh '''
+      //       az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+      //       az vm delete -g testrg -n ${IMAGE_NAME} --yes
+      //       '''
+      //       }
+      // }
+      // }
+    
+    // stage('Upload to SIG') {
+    //    when {
+    //          expression { "${params.ACTION} == 'Yes'" }
+    //     }
+    //   steps{  
+    //     sh "echo "Hello ${params.ACTION}""
+    //     // withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+    //     //        {
+    //     //     sh '''
+    //     //         export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
+    //     //         export AZURE_SECRET=$AZURE_CLIENT_SECRET
+    //     //         export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID
+    //     //         export AZURE_TENANT=$AZURE_TENANT_ID
+    //     //         export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
+
+    //     //     '''
+    //     //  }
+    //     }
+    //   }
       }
     }
 
