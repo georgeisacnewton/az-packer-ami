@@ -1,6 +1,7 @@
 ---
 - name: Install Git and Check CIS role
   hosts: localhost
+  become: true
   gather_facts: true
 
   roles:
