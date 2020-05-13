@@ -29,19 +29,26 @@ pipeline {
     //   }
     // }
 
-    stage('Condition') {
-      steps {
-         input {
-                message "Should we continue?"
+    // stage('Condition') {
+    //   steps {
+    //      input {
+    //             message "Should we continue?"
+    //             submitter "Yes,No"
+    //             parameters {
+    //                 string(name: 'Action', defaultValue: 'No', description: '?')
+    //             }
+    //         }
+    //   }
+    //     }
+
+      stage('Destroy') {
+          input {
+              message "Should we continue?"
                 submitter "Yes,No"
                 parameters {
                     string(name: 'Action', defaultValue: 'No', description: '?')
                 }
             }
-      }
-        }
-
-      stage('Destroy') {
       steps {
       when {
             expression { params.Action == 'No' }
