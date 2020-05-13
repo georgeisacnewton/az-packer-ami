@@ -41,19 +41,16 @@ pipeline {
     //   }
     //     }
 
-      stage('Destroy') {
-          input {
-              message "Should we continue?"
-                submitter "Yes,No"
-                parameters {
-                          choice(
-                            choices: ['Yes' , 'No'],
-                            description: '',
-                            name: 'ACTION')
-                }
-            }
-
-             if  { params.ACTION == 'No' }
+      stage('Condition') {
+        script {
+        // Show the select input modal
+            def INPUT_PARAMS = input message: 'Please Provide Parameters',
+                        parameters: [
+                        choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '')]
+            env.ACTION=INPUT_PARAMS.ACTION
+        
+         
+         if( "${INPUT_PARAMS}" == "Yes")
               {
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
@@ -64,10 +61,12 @@ pipeline {
             }
       }
       }
+      }
 
   
     stage('Upload to SIG') {
-      steps {
+      script {
+        if( "${env.ACTION}" == "No") {
           withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
@@ -78,6 +77,7 @@ pipeline {
                 export ANSIBLE_HOST_KEY_CHECKING=False; ansible-playbook ansible/sig.yml -e '{"shared_image_name":"env.IMAGE_NAME", "shared_image_version":"env.VERSION"}'
 
             '''
+         }
         }
       }
     }
