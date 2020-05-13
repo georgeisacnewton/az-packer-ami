@@ -49,8 +49,7 @@ pipeline {
                         parameters: [$class: 'ChoiceParameterDefinition',
                              choices: ['No','Yes'].join('\n'),
                              name: 'input',
-                             description: 'Menu - select box option']
-                    ])
+                             description: 'Menu - select box option'])
 
          if( "${INPUT_PARAMS}" == "Yes")
               {
