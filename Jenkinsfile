@@ -51,11 +51,12 @@ pipeline {
             }
 
         when {
-             "${ACTION}" 'No'
+           expression { params.ACTION == 'No' }
+        
         }
         steps {
 
-           echo "Hello ${ACTION}"
+           echo "Hello params.ACTION"
 
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
