@@ -37,7 +37,6 @@ pipeline {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
             }
-         echo 
         when {
              expression { "${params.ACTION} == 'No'" }
         }
