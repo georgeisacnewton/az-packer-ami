@@ -44,7 +44,7 @@ pipeline {
       stage('Condition') {
        
         when {
-             expression { ${params.ACTION} == 'No' }
+             expression { "${params.ACTION}" == 'No' }
         }
         input {
                 message "Should we continue?"
