@@ -1,1 +1,2 @@
-sudo yum -y remove ansible
+#sudo yum -y remove ansible
+echo "clean"
