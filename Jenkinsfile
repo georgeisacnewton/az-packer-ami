@@ -30,14 +30,14 @@ pipeline {
     // }
 
     stage('Condition') {
-            input {
-                message "Should we continue?"
-                submitter "Yes,No"
-                parameters {
-                    choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
+  
+      environment {
+          test = input {
+          message "Should we continue?"
+          submitter "Yes,No"
+          parameters {
+          choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
-                environment {
-                   test = "${params.ACTION}"
                    }
             }
       steps {
