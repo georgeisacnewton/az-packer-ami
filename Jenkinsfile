@@ -30,21 +30,19 @@ pipeline {
     }
 
     stage('Destory') {
-
-      input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "Yes,No"
-                parameters {
-                    string(name: 'ACTION', defaultValue: 'Yes', description: '?')
-                }
-            }
-
-      when {
-            expression { params.ACTION == 'Yes' }
-            }
-
       steps {
+        step {
+        script {
+             def userInput = input(id: 'userInput', message: 'Proceed?',
+             parameters: [[$class: 'ChoiceParameterDefinition', defaultValue: 'strDef', 
+                description:'describing choices', name:'ACTION', choices: "Yes\nNor"]
+             ])
+        }
+        }
+        step {
+      when {
+            expression { params.ACTION == 'No' }
+            }
           withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
@@ -53,6 +51,7 @@ pipeline {
             '''
             }
           }
+      }
         }
   
     stage('Upload to SIG') {
