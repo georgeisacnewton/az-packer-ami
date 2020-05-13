@@ -31,17 +31,19 @@ pipeline {
 
     stage('Destory') {
       steps {
-        step {
-        script {
-             def userInput = input(id: 'userInput', message: 'Proceed?',
-             parameters: [[$class: 'ChoiceParameterDefinition', defaultValue: 'strDef', 
-                description:'describing choices', name:'ACTION', choices: "Yes\nNor"]
-             ])
-        }
-        }
-        step {
+
+       script {
+            // Define Variable
+             def USER_INPUT = input(
+                    message: 'Yes or No ?',
+                    parameters: [
+                            [$class: 'ChoiceParameterDefinition',
+                             choices: ['no','yes'].join('\n'),
+                             name: 'input',
+                             description: 'Menu - select box option']
+                    ])
       when {
-            expression { params.ACTION == 'No' }
+            expression { params.USER_INPUT == 'No' }
             }
           withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
@@ -50,7 +52,7 @@ pipeline {
             az vm delete -g testrg -n ${IMAGE_NAME}--yes
             '''
             }
-          }
+      }
       }
         }
   
