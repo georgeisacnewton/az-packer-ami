@@ -38,7 +38,7 @@ pipeline {
                 }
             }
       steps {
-         echo "Hello ${params.ACTION}"
+         echo "Choice: ${params.ACTION}"
             }
       }
     
