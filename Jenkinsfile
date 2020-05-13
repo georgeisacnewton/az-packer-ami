@@ -49,6 +49,10 @@ pipeline {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
             }
+        environment {
+           ACTIVE = "${ACTION}"
+          }
+
         when {
              expression { "${ACTION} == 'No'" }
         }
@@ -68,10 +72,10 @@ pipeline {
     
     stage('Upload to SIG') {
        when {
-             expression { "${ACTION} == 'Yes'" }
+             expression { "${ACTIVE} == 'Yes'" }
         }
       steps{  
-        echo "Hello ${ACTION}"
+        echo "Hello ${ACTIVE}"
         withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
