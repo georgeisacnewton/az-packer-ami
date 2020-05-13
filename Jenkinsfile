@@ -53,11 +53,9 @@ pipeline {
                 }
             }
 
-         when {
-            expression { params.ACTION == 'No' }
-            }
-      steps {
-          withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+             if  { params.ACTION == 'No' }
+              {
+             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
