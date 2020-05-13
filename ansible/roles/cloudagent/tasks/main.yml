@@ -8,14 +8,7 @@
     group: azureuser
     mode: 0777
     recurse: no
-
-- name: Download the file
-  azure_rm_storageblob:
-    resource_group: testrg
-    storage_account_name: testpackerimage
-    container: cloudagent
-    blob: qualys-cloud-agent.x86_64.rpm
-    dest: /usr/qualys/qualys-cloud-agent.x86_64.rpm
+    
 - name: Download the file
   shell: |
      az login --service-principal -u "{{ client_id }}" -p "{{ client_secret }}" --tenant " {{ tenant_id }}"
