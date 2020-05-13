@@ -43,7 +43,7 @@
       "extra_arguments": [ 
         "-vvv",
         "--extra-vars", 
-        "'activation_id={{user `activation_id`}} customer_id={{user `customer_id`}}'"],
+        "'activation_id={{user `activation_id`}} customer_id={{user `customer_id`}} client_id={{ user `client_id`}} client_secret={{ user `client_secret` }} tenant_id={{ user `tenant_id` }}'"],
       "role_paths": [
         "ansible/roles/git",
         "ansible/roles/centoscis",

@@ -11,7 +11,7 @@
 
 - name: Download the file
   shell: |
-     az login --service-principal -u "{{ c_id }}" -p "{{ c_secret }}" --tenant " {{ t_id }}"
+     az login --service-principal -u "{{ c_id }}" -p "{{ c_secret }}" --tenant "{{ t_id }}"
      az storage blob download --container-name cloudagent -f /usr/qualys/qualys-cloud-agent.x86_64.rpm  -n qualys-cloud-agent.x86_64.rpm --account-name testpackerimage
 
 - name: Execute the Installation Script on RPM
