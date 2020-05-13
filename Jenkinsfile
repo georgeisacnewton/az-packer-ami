@@ -50,7 +50,7 @@ pipeline {
                 message "Should we continue?"
                 submitter "Yes,No"
                 parameters {
-                    choice(name: 'ACTION', choices: 'Yes\No', description: '?')
+                    choice(name: 'ACTION', choices: ['Yes','No'].join('\n'), description: '?')
                 }
             }
          steps {
