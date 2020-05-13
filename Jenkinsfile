@@ -41,9 +41,9 @@ pipeline {
              name: 'ACTION')
       }
     }
-
+  }
     stage('Destory') {
-      
+
       when {
             expression { params.ACTION == 'Yes' }
             }
