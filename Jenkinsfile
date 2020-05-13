@@ -30,6 +30,17 @@ pipeline {
     // }
 
     stage('Condition') {
+          input {
+                message "Should we continue?"
+                submitter "Yes,No"
+                parameters {
+                    choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
+                }
+            }
+         echo 
+        when {
+             expression { "${params.ACTION} == 'No'" }
+        }
       steps {
          echo "Hello ${params.ACTION}"
             }
