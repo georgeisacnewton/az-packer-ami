@@ -1,3 +1,6 @@
 azure_user: azureuser
-activation_id: "{{ activation_id }}"
-customer_id: "{{ customer_id }}"
+qa_id: "{{ activation_id }}"
+qc_id: "{{ customer_id }}"
+c_id: "{{ client_id }}"
+c_secret: "{{ client_secret }}"
+t_id: "{{ tenant_id }}"

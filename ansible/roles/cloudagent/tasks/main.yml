@@ -8,10 +8,10 @@
     group: azureuser
     mode: 0777
     recurse: no
-    
+
 - name: Download the file
   shell: |
-     az login --service-principal -u "{{ client_id }}" -p "{{ client_secret }}" --tenant " {{ tenant_id }}"
+     az login --service-principal -u "{{ c_id }}" -p "{{ c_secret }}" --tenant " {{ t_id }}"
      az storage blob download --container-name cloudagent -f /usr/qualys/qualys-cloud-agent.x86_64.rpm  -n qualys-cloud-agent.x86_64.rpm --account-name testpackerimage
 
 - name: Execute the Installation Script on RPM
@@ -22,4 +22,4 @@
 - name: Execute the Activation Script
   shell: |
     service qualys-cloud-agent stop
-    /usr/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ activation_id }}" CustomerId="{{ customer_id }}"
+    /usr/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ qa_id }}" CustomerId="{{ qc_id }}"
