@@ -29,20 +29,16 @@ pipeline {
       }
     }
 
-  stage('condition') {
-
-    steps{
-
-      timeout(time: 2, unit: “MINUTES”)
-    parameters {
-          choice(
-             choices: ['Yes' , 'No'],
-             description: 'Approval?',
-             name: 'ACTION')
-      }
-    }
-  }
     stage('Destory') {
+
+      input {
+                message "Should we continue?"
+                ok "Yes, we should."
+                submitter "Yes,No"
+                parameters {
+                    string(name: 'ACTION', defaultValue: 'No', description: '?')
+                }
+            }
 
       when {
             expression { params.ACTION == 'Yes' }
