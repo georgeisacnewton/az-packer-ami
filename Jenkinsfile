@@ -43,7 +43,7 @@ pipeline {
                 echo "Hello, ${PERSON}, nice to meet you."
             }
     
-
+    }
       // stage('Condition') { 
       //  input {
       //           message "Should we continue?"
