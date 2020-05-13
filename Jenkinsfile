@@ -36,9 +36,13 @@ pipeline {
                 parameters {
                     choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
                 }
+                environment {
+                   test = "${params.ACTION}"
+                   }
             }
       steps {
          echo "Choice: ${params.ACTION}"
+         echo "Choice: ${env.test}"
             }
       }
     
