@@ -23,7 +23,7 @@ pipeline {
             {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            az vm create --resource-group testrg  --name ${IMAGE_NAME} --image ${IMAGE_NAME} --admin-username azureuser --generate-ssh-keys
+            az vm create --resource-group testrg  --name ${IMAGE_NAME} --image ${IMAGE_NAME} --admin-username azureuser
             '''
         }
       }
