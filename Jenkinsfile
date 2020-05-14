@@ -40,52 +40,52 @@ pipeline {
     
     }
     }
-      // stage('Delete VM') { 
+      stage('Delete VM') { 
 
-      //   when {
-      //      expression { 
-      //        environment name: 'RELEASE_SCOPE', value: 'No' 
-      //         }
-      //   }
-      //   steps {
+        when {
+           expression { 
+             "${env.RELEASE_SCOPE}" == 'No'
+              }
+        }
+        steps {
 
-      //      echo "Hello ${env.RELEASE_SCOPE} "
+           echo "Hello ${env.RELEASE_SCOPE} "
 
-      //        withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-      //       {
-      //       sh '''
-      //       az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-      //       az vm delete -g testrg -n ${IMAGE_NAME} --yes
-      //       '''
-      //       }
-      // }
-      // }
-      
-     stage('Delete VM') { 
-
-      steps {
-      script {
-            if("${env.RELEASE_SCOPE}" == 'Yes') {
-            echo "Hello ${env.RELEASE_SCOPE} "
-            
-            withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
             az vm delete -g testrg -n ${IMAGE_NAME} --yes
             '''
             }
-
-            }
-        }
       }
-     }
+      }
+      
+    //  stage('Delete VM') { 
+
+    //   steps {
+    //   script {
+    //         if("${env.RELEASE_SCOPE}" == 'Yes') {
+    //         echo "Hello ${env.RELEASE_SCOPE} "
+            
+    //         withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+    //         {
+    //         sh '''
+    //         az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+    //         az vm delete -g testrg -n ${IMAGE_NAME} --yes
+    //         '''
+    //         }
+
+    //         }
+    //     }
+    //   }
+    //  }
     
     stage('Upload to SIG') {
     
       when {
            expression { 
-          "${env.RELEASE_SCOPE}" == 'No'
+          "${env.RELEASE_SCOPE}" == 'Yes'
            }
         
         }
