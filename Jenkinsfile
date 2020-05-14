@@ -44,7 +44,7 @@ pipeline {
 
         when {
            expression { 
-             return "${env.RELEASE_SCOPE} == No";
+             environment name: 'RELEASE_SCOPE', value: 'No' 
               }
         }
         steps {
@@ -65,7 +65,7 @@ pipeline {
     
       when {
            expression { 
-             return "${env.RELEASE_SCOPE} == Yes";
+             environment name: 'RELEASE_SCOPE', value: 'Yes' 
            }
         
         }
