@@ -85,7 +85,7 @@ pipeline {
     
       when {
            expression { 
-             environment name: 'RELEASE_SCOPE', value: 'No' 
+          "${env.RELEASE_SCOPE}" == 'No'
            }
         
         }
