@@ -33,10 +33,10 @@ pipeline {
       steps {
   
                 script {
-                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
-                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'Yes\nNo', description: 'What is the release scope?')]
+                    env.ACTION = input message: 'User input required', ok: 'Release!',
+                            parameters: [choice(name: 'ACTION', choices: 'Yes\nNo', description: 'Proceed ?')]
                 }
-                echo "${env.RELEASE_SCOPE}"
+                echo "${env.ACTION}"
     
     }
     }
@@ -44,12 +44,12 @@ pipeline {
 
         when {
            expression { 
-             "${env.RELEASE_SCOPE}" == 'No'
+             "${env.ACTION}" == 'No'
               }
         }
         steps {
 
-           echo "Hello ${env.RELEASE_SCOPE} "
+           echo "Hello ${env.ACTION} "
 
              withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
             {
@@ -64,15 +64,17 @@ pipeline {
     
       when {
            expression { 
-          "${env.RELEASE_SCOPE}" == 'Yes'
+          "${env.ACTION}" == 'Yes'
            }
         
         }
       steps{  
-        echo "Hello ${env.RELEASE_SCOPE}"
+        echo "Hello ${env.ACTION}"
         withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
+                az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+                az vm delete -g testrg -n ${IMAGE_NAME} --yes
                 export AZURE_CLIENT_ID=$AZURE_CLIENT_ID
                 export AZURE_SECRET=$AZURE_CLIENT_SECRET
                 export AZURE_SUBSCRIPTION_ID=$AZURE_SUBSCRIPTION_ID

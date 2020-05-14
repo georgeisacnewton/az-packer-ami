@@ -19,7 +19,12 @@
   args:
     chdir: /usr/qualys/
 
+- name: stop cloud agent 
+  service:
+    name: qualys-cloud-agent
+    state: stop
+    enabled: true
+
 - name: Execute the Activation Script
   shell: |
-    service qualys-cloud-agent stop
     /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ qa_id }}" CustomerId="{{ qc_id }}"
