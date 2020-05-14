@@ -65,7 +65,7 @@ pipeline {
 
       steps {
       script {
-            if("${env.RELEASE_SCOPE} == Yes") {
+            if("${env.RELEASE_SCOPE}" == 'Yes') {
             echo "Hello ${env.RELEASE_SCOPE} "
             
             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
