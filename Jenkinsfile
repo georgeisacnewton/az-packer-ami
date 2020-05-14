@@ -43,8 +43,9 @@ pipeline {
       stage('Delete VM') { 
 
         when {
-           expression { "${env.RELEASE_SCOPE} == No" }
-        
+           expression { 
+             return "${env.RELEASE_SCOPE} == No";
+              }
         }
         steps {
 
@@ -63,7 +64,9 @@ pipeline {
     stage('Upload to SIG') {
     
       when {
-           expression { "${env.RELEASE_SCOPE} == Yes" }
+           expression { 
+             return "${env.RELEASE_SCOPE} == Yes";
+           }
         
         }
       steps{  
