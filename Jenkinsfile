@@ -29,51 +29,46 @@ pipeline {
     //   }
     // }
 
-    // stage('Condition') {
+    stage('Condition') {
+      steps {
   
-    //      input {
-    //             message "Should we continue?"
-    //             parameters {
-    //                 choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-    //             }
-    //         }
-    //         steps {
-    //             echo "Hello, ${CHOICE}, nice to meet you."
-    //         }
-    
-    // }
-      stage('Condition') { 
-       input {
-                message "Should we continue?"
-                parameters {
-                    choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
+                script {
+                    env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
+                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
                 }
-            }
+                echo "${env.RELEASE_SCOPE}"
+    
+    }
+    }
+      // stage('Condition1') { 
+      //  input {
+      //           message "Should we continue?"
+      //           parameters {
+      //               choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
+      //           }
+      //       }
 
-        when {
-           expression { "${ACTION} == No" }
+      //   when {
+      //      expression { "${ACTION} == No" }
         
-        }
-        steps {
+      //   }
+      //   steps {
 
-           echo "Hello ${ACTION}"
+      //      echo "Hello ${ACTION}"
 
-             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-            {
-            sh '''
-            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            az vm delete -g testrg -n ${IMAGE_NAME} --yes
-            '''
-            }
-      }
-      }
+      //        withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+      //       {
+      //       sh '''
+      //       az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+      //       az vm delete -g testrg -n ${IMAGE_NAME} --yes
+      //       '''
+      //       }
+      // }
+      // }
     
     stage('Upload to SIG') {
-       when {
-             expression { "${ACTIVE} == 'Yes'" }
-        }
       steps{  
-        echo "Hello ${ACTIVE}"
+        echo "Hello ${env.RELEASE_SCOPE}"
         withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
                {
             sh '''
