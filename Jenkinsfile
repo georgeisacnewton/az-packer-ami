@@ -34,39 +34,38 @@ pipeline {
   
                 script {
                     env.RELEASE_SCOPE = input message: 'User input required', ok: 'Release!',
-                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'patch\nminor\nmajor', description: 'What is the release scope?')]
+                            parameters: [choice(name: 'RELEASE_SCOPE', choices: 'Yes\No', description: 'What is the release scope?')]
                 }
                 echo "${env.RELEASE_SCOPE}"
     
     }
     }
-      // stage('Condition1') { 
-      //  input {
-      //           message "Should we continue?"
-      //           parameters {
-      //               choice(name: 'ACTION', choices: ['Yes','No'], description: '?')
-      //           }
-      //       }
+      stage('Delete VM') { 
 
-      //   when {
-      //      expression { "${ACTION} == No" }
+        when {
+           expression { "${env.RELEASE_SCOPE} == No" }
         
-      //   }
-      //   steps {
+        }
+        steps {
 
-      //      echo "Hello ${ACTION}"
+           echo "Hello ${env.RELEASE_SCOPE} "
 
-      //        withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
-      //       {
-      //       sh '''
-      //       az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-      //       az vm delete -g testrg -n ${IMAGE_NAME} --yes
-      //       '''
-      //       }
-      // }
-      // }
+             withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
+            {
+            sh '''
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
+            az vm delete -g testrg -n ${IMAGE_NAME} --yes
+            '''
+            }
+      }
+      }
     
     stage('Upload to SIG') {
+    
+      when {
+           expression { "${env.RELEASE_SCOPE} == Yes" }
+        
+        }
       steps{  
         echo "Hello ${env.RELEASE_SCOPE}"
         withCredentials ([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59')])
