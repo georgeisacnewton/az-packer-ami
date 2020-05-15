@@ -2,7 +2,7 @@ pipeline {
   agent any
   
   environment {
-    IMAGE_NAME = "PwC-customLinux-130"
+    IMAGE_NAME = "PwC-customLinux-${BUILD_NUMBER}"
     VERSION = "1.0.1"
     RG = "testrg"
     SIG= "SIG_test"
