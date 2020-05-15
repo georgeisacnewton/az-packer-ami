@@ -9,7 +9,7 @@ pipeline {
     }
     
   stages {
-    stage('Create Packer AMI') {
+    stage('Create Packer Image') {
         steps {
     withCredentials([azureServicePrincipal('6733829c-3f4f-49c5-a2f8-536f17e2cf59'),
     usernamePassword(credentialsId: 'qualysid', usernameVariable: 'CU_ID', passwordVariable: 'AT_ID')]) {
