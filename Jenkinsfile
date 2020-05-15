@@ -86,7 +86,7 @@ pipeline {
                 az sig image-definition create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --publisher Cloudsec --offer centoscloudsec --sku 7 --os-type linux --os-state generalized
                 az image update -n ${IMAGE_NAME} -g ${RG} --tags tag1=GM tag2=centos7
                 imageID="/subscriptions/86d22e9c-bc56-49c3-a93a-0586bbb4ee79/resourceGroups/testrg/providers/Microsoft.Compute/images/${IMAGE_NAME}"
-                az sig image-version create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --gallery-image-version ${IMAGE_NAME} --target-regions "westus=1" "eastus=1" --replica-count 2 --managed-image $imageID
+                az sig image-version create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --gallery-image-version ${VERSION} --target-regions "westus=1" "eastus=1" --replica-count 2 --managed-image $imageID
             '''
          }
         }
