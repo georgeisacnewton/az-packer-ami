@@ -37,8 +37,8 @@ pipeline {
       steps {
   
                 script {
-                    env.ACTION = input message: 'Approve or Reject', ok: 'Next',
-                            parameters: [choice(name: 'ACTION', choices: 'Yes\nNo', description: 'Only Yes/No')]
+                    env.ACTION = input message: 'Approve', ok: 'Next',
+                            parameters: [choice(name: 'ACTION', choices: 'Yes\nNo', description: 'Choose an action')]
                 }
                 echo "${env.ACTION}"
     
@@ -59,7 +59,7 @@ pipeline {
             {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-            az resource delete --ids $(az resource list --tags cimage -otable --query "[].id" -otsv)
+            az resource delete --ids $(az resource list --tag cimage -otable --query "[].id" -otsv)
             az image delete -n ${IMAGE_NAME} -g ${RG}
             '''
             }
