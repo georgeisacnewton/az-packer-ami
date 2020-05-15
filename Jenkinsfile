@@ -60,6 +60,7 @@ pipeline {
             sh '''
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
             az vm delete -g testrg -n ${IMAGE_NAME} --yes
+            az image delete -n ${IMAGE_NAME} -g ${RG}
             '''
             }
       }
@@ -84,6 +85,7 @@ pipeline {
                 sigId=$(az sig show --resource-group ${RG} --gallery-name ${SIG} --query id --output tsv)
                 az sig image-definition create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --publisher Cloudsec --offer centoscloudsec --sku 7 --os-type linux --os-state generalized
                 az role assignment create --role "Reader" --assignee georgeisacnewton@gmail.com --scope $sigId
+                az image update -n ${IMAGE_NAME} -g ${RG} --tags tag1=GM tag2=centos7
                 imageID="/subscriptions/86d22e9c-bc56-49c3-a93a-0586bbb4ee79/resourceGroups/testrg/providers/Microsoft.Compute/images/${IMAGE_NAME}"
                 az sig image-version create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --gallery-image-version 1.0.0 --target-regions "southcentralus=1" "eastus2=1=Standard_LRS" --replica-count 2 --managed-image $imageID
             '''
