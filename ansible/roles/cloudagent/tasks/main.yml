@@ -22,7 +22,7 @@
 - name: stop cloud agent 
   service:
     name: qualys-cloud-agent
-    state: stop
+    state: stopped
     enabled: true
 
 - name: Execute the Activation Script
