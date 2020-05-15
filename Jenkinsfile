@@ -80,7 +80,7 @@ pipeline {
                 {
             sh '''
                 az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET  --tenant $AZURE_TENANT_ID
-                az vm delete -g testrg -n ${IMAGE_NAME} --yes
+                az resource delete --ids $(az resource list --tag cimage -otable --query "[].id" -otsv)
                 az sig create --resource-group ${RG} --gallery-name ${SIG}
                 sigId=$(az sig show --resource-group ${RG} --gallery-name ${SIG} --query id --output tsv)
                 az sig image-definition create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --publisher Cloudsec --offer centoscloudsec --sku 7 --os-type linux --os-state generalized
