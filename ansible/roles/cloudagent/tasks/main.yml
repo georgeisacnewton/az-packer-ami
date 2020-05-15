@@ -25,10 +25,10 @@
     state: stopped
     enabled: true
   register: qualys
-  
-- debug: msg="{qualys.state}}"
+
+- debug: msg="{{ qualys.state }}"
 
 - name: Execute the Activation Script
   shell: |
     /usr/local/qualys/cloud-agent/bin/qualys-cloud-agent.sh ActivationId="{{ qa_id }}" CustomerId="{{ qc_id }}"
-  when: qualys.state == stopped
+  when: qualys.state == "stopped"
