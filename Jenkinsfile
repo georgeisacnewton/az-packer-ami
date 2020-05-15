@@ -44,7 +44,7 @@ pipeline {
     
     }
     }
-      stage('Delete VM') { 
+      stage('Destory VM') { 
 
         when {
            expression { 
@@ -65,7 +65,7 @@ pipeline {
       }
       }
 
-       stage('Upload to SIG') {
+       stage('Delete VM and share GM') {
     
         when {
            expression { 
@@ -83,7 +83,7 @@ pipeline {
                 az sig create --resource-group ${RG} --gallery-name ${SIG}
                 sigId=$(az sig show --resource-group ${RG} --gallery-name ${SIG} --query id --output tsv)
                 az sig image-definition create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --publisher Cloudsec --offer centoscloudsec --sku 7 --os-type linux --os-state generalized
-                az role assignment create --role "Reader" --assignee georgeisacnewton.rajan@pwc.com --scope $sigId
+                az role assignment create --role "Reader" --assignee georgeisacnewton@gmail.com --scope $sigId
                 imageID="/subscriptions/86d22e9c-bc56-49c3-a93a-0586bbb4ee79/resourceGroups/testrg/providers/Microsoft.Compute/images/${IMAGE_NAME}"
                 az sig image-version create --resource-group ${RG} --gallery-name ${SIG} --gallery-image-definition packercentos --gallery-image-version 1.0.0 --target-regions "southcentralus=1" "eastus2=1=Standard_LRS" --replica-count 2 --managed-image $imageID
             '''
